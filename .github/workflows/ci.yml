@@ -1,0 +1,32 @@
+name: Enterprise Observability CI Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js Runtime
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Enterprise Packages
+        run: npm install
+
+      - name: Execute Code Linting
+        run: npm run lint
+
+      - name: Compile Observability Builds
+        run: npm run build
+
+      - name: Run Telemetry Suite
+        run: npm test
