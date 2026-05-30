@@ -45,8 +45,9 @@ try {
   
   console.log(`⚠️  Zero-scale dynamic factor: ${criticalFactor}`);
   
-  if (!isFinite(criticalFactor)) {
-    throw new Error("Telemetry Scale Error: Division by zero produced infinite metrics coefficient.");
+  // Assert that the factor is the expected safe value (0) when scale is 0.
+  if (criticalFactor !== 0) {
+    throw new Error(`Telemetry Scale Error: Expected safe factor (0) for scale 0, but got ${criticalFactor}.`);
   }
 
   console.log("✅ [Phase 4 PASS] Boundary scale limit resolved.");
