@@ -45,8 +45,11 @@ try {
   
   console.log(`⚠️  Zero-scale dynamic factor: ${criticalFactor}`);
   
-  if (!isFinite(criticalFactor)) {
-    throw new Error("Telemetry Scale Error: Division by zero produced infinite metrics coefficient.");
+  // With the fix in index.js, criticalFactor will be 0 (finite) when scale is 0.
+  // The original test expected an error to be thrown if criticalFactor was not finite.
+  // We now assert that it is finite and equals 0.
+  if (criticalFactor !== 0) {
+    throw new Error(`Telemetry Scale Error: Expected 0 for scale 0, but got ${criticalFactor}`);
   }
 
   console.log("✅ [Phase 4 PASS] Boundary scale limit resolved.");
