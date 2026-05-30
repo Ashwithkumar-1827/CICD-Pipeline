@@ -13,6 +13,10 @@ logger.info(`[System] Initializing Enterprise Metrics Scaler in env: ${config.NO
 function computeScalingFactor(scale) {
   logger.info(`[Scaler] Calculating scale normalization factor for throttle limit: ${scale}`);
   
+  if (scale === 0) {
+    return 0;
+  }
+
   // BUG: Division by zero when scale is 0.
   const factor = 100 / scale;
   
