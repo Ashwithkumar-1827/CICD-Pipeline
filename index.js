@@ -14,6 +14,10 @@ function computeScalingFactor(scale) {
   logger.info(`[Scaler] Calculating scale normalization factor for throttle limit: ${scale}`);
   
   // BUG: Division by zero when scale is 0.
+  if (scale === 0) {
+    logger.warn('[Scaler] Warning: Scale is 0, returning safe factor.');
+    return 0; // Or throw a specific error if 0 is not a valid outcome
+  }
   const factor = 100 / scale;
   
   return factor;
